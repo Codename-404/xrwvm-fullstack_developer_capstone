@@ -13,13 +13,14 @@ class CarMake(models.Model):
     description = models.TextField()
     # Other fields as needed
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name  # Return the name as the string representation
 
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 class CarModel(models.Model):
-    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)  # Many-to-One relationship
+    # Many-to-One relationship
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     CAR_TYPES = [
         ('SEDAN', 'Sedan'),
@@ -35,7 +36,6 @@ class CarModel(models.Model):
         ])
     # Other fields as needed
 
-    def __str__(self):
-        return self.name  # Return the name as the string representation
-    
-    
+    def __str__(self) -> str:
+        # Return the name as the string representation
+        return self.name

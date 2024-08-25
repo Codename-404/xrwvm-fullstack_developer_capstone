@@ -1,5 +1,4 @@
-# Uncomment the required imports before adding the code
-
+# Get an instance of a logger
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
@@ -25,9 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
-# Create a `login_request` view to handle sign in request
 @csrf_exempt
-def login_user(request):
+def login_user(request) -> JsonResponse:
     # Get username and password from request.POST dictionary
     data = json.loads(request.body)
     username = data['userName']
@@ -41,16 +39,16 @@ def login_user(request):
         data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
-# Create a `logout_request` view to handle sign out request
-def logout_request(request):
+
+@csrf_exempt
+def logout_request(request) -> JsonResponse:
     logout(request)
     data = {"userName":""}
     return JsonResponse(data)
-# ...
 
-# Create a `registration` view to handle sign up request
+
 @csrf_exempt
-def registration(request):
+def registration(request) -> JsonResponse:
     context = {}
 
     data = json.loads(request.body)
@@ -80,9 +78,9 @@ def registration(request):
     else :
         data = {"userName":username,"error":"Already Registered"}
         return JsonResponse(data)
-# ...
 
-def get_cars(request):
+
+def get_cars(request) -> JsonResponse:
     count = CarMake.objects.filter().count()
     print(count)
     if(count == 0):
@@ -93,11 +91,12 @@ def get_cars(request):
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels":cars})
 
+
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
 # def get_dealerships(request):
 #Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
-def get_dealerships(request, state="All"):
+def get_dealerships(request, state="All") -> JsonResponse:
     if(state == "All"):
         endpoint = "/fetchDealers"
     else:
@@ -105,9 +104,10 @@ def get_dealerships(request, state="All"):
     dealerships = get_request(endpoint)
     return JsonResponse({"status":200,"dealers":dealerships})
 
+
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 # def get_dealer_reviews(request,dealer_id):
-def get_dealer_reviews(request, dealer_id):
+def get_dealer_reviews(request, dealer_id: str) -> JsonResponse:
     # if dealer id has been provided
     if(dealer_id):
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
@@ -120,10 +120,11 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
 
+
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
 # ...
-def get_dealer_details(request, dealer_id):
+def get_dealer_details(request, dealer_id: str) -> JsonResponse:
     if(dealer_id):
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
@@ -131,9 +132,10 @@ def get_dealer_details(request, dealer_id):
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
 
+
 # Create a `add_review` view to submit a review
 # def add_review(request):
-def add_review(request):
+def add_review(request) -> JsonResponse:
     if(request.user.is_anonymous == False):
         data = json.loads(request.body)
         try:
@@ -144,14 +146,3 @@ def add_review(request):
     else:
         return JsonResponse({"status":403,"message":"Unauthorized"})
 
-
-def get_cars(request):
-    count = CarMake.objects.filter().count()
-    print(count)
-    if(count == 0):
-        initiate()
-    car_models = CarModel.objects.select_related('car_make')
-    cars = []
-    for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
-    return JsonResponse({"CarModels":cars})
