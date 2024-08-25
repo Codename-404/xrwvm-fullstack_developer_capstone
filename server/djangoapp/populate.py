@@ -5,7 +5,7 @@ from .models import CarMake, CarModel
 
 def initiate() -> None:
     """Populate the database with the given car make and model data."""
-    car_make_data: List[dict] = [
+    car_make_data: List[dict[str, str]] = [
         {"name": "NISSAN", "description": "Great cars. Japanese technology"},
         {"name": "Mercedes", "description": "Great cars. German technology"},
         {"name": "Audi", "description": "Great cars. German technology"},
@@ -20,7 +20,7 @@ def initiate() -> None:
         )
 
     # Create CarModel instances with the corresponding CarMake instances
-    car_model_data: List[dict] = [
+    car_model_data: List[dict[str, str | int | CarMake]] = [
         {"name": "Pathfinder", "type": "SUV", "year": 2023, "car_make": car_make_instances[0]},
         {"name": "Qashqai", "type": "SUV", "year": 2023, "car_make": car_make_instances[0]},
         {"name": "XTRAIL", "type": "SUV", "year": 2023, "car_make": car_make_instances[0]},
@@ -43,3 +43,4 @@ def initiate() -> None:
         CarModel.objects.create(
             name=data['name'], car_make=data['car_make'], type=data['type'], year=data['year']
         )
+
