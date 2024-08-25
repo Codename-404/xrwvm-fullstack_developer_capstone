@@ -87,7 +87,7 @@ def get_cars(request) -> JsonResponse:
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, 
+        cars.append({"CarModel": car_model.name,
                      "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
@@ -95,7 +95,7 @@ def get_cars(request) -> JsonResponse:
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
 # def get_dealerships(request):
-# Update the `get_dealerships` 
+# Update the `get_dealerships`
 # render list of dealerships all by default,
 # particular state if state is passed
 def get_dealerships(request, state="All") -> JsonResponse:
@@ -144,7 +144,7 @@ def add_review(request) -> JsonResponse:
             post_review(data)
             return JsonResponse({"status": 200})
         except Exception:
-            return JsonResponse({"status": 401, 
+            return JsonResponse({"status": 401,
                                  "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
