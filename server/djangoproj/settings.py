@@ -16,7 +16,6 @@ import pathlib
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -77,7 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangoproj.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -141,4 +139,3 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend', 'build'),
     os.path.join(BASE_DIR, 'frontend', 'build', 'static'),
 ]
-

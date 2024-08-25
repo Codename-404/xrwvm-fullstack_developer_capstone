@@ -58,4 +58,3 @@ def post_review(data_dict: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         print(f'Unexpected {err=}, {type(err)=}')
         print('Network exception occurred')
         return None
-
