@@ -87,14 +87,17 @@ def get_cars(request) -> JsonResponse:
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append({"CarModel": car_model.name, 
+                     "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
 # def get_dealerships(request):
-#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` 
+# render list of dealerships all by default,
+# particular state if state is passed
 def get_dealerships(request, state="All") -> JsonResponse:
     if state == "All":
         endpoint = "/fetchDealers"
@@ -135,12 +138,13 @@ def get_dealer_details(request, dealer_id: str) -> JsonResponse:
 # Create a `add_review` view to submit a review
 # def add_review(request):
 def add_review(request) -> JsonResponse:
-    if request.user.is_anonymous == False:
+    if request.user.is_anonymous is False:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
-        except:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+        except Exception:
+            return JsonResponse({"status": 401, 
+                                 "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
