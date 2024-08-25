@@ -128,3 +128,5 @@ img {
   text-align: center;
   box-shadow: 2px 2px 3px #999;
 }
+
+/* ibmcloud cr image-rm us.icr.io/<sn-labs-nayeemnayeem>/dealership:latest && docker rmi us.icr.io/<sn-labs-nayeemnayeem>/dealership:latest */
